@@ -1,0 +1,85 @@
+%PDF-1.1
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 620 >>
+stream
+BT
+/F1 16 Tf
+72 760 Td
+(Yisak Gezahegn Mamo - Curriculum Vitae) Tj
+0 -24 Td
+/F1 11 Tf
+(Full Stack Software Engineer | Adama, Ethiopia) Tj
+0 -20 Td
+(Email: yisakgezahegnmamo@gmail.com) Tj
+0 -18 Td
+(Phone: +251 973 391 342 | +251 952 365 136 | +251 799 489 650) Tj
+0 -28 Td
+/F1 12 Tf
+(Professional Summary) Tj
+0 -18 Td
+/F1 11 Tf
+(Aspiring Frontend Developer with strong Computer Science foundation and) Tj
+0 -15 Td
+(hands-on experience building scalable web applications and dynamic UIs.) Tj
+0 -24 Td
+/F1 12 Tf
+(Education) Tj
+0 -18 Td
+/F1 11 Tf
+(Haramaya University - BSc in Computer Science and Management) Tj
+0 -15 Td
+(Relevant Coursework: Software Engineering, Computer Architecture,) Tj
+0 -15 Td
+(Turing Machines, Database Management Systems.) Tj
+0 -24 Td
+/F1 12 Tf
+(Experience) Tj
+0 -18 Td
+/F1 11 Tf
+(Junior Frontend Developer, Fauget Studio (2017-2018)) Tj
+0 -15 Td
+(- Created more than 5 web projects) Tj
+0 -15 Td
+(- Participated in collaborative group programming projects) Tj
+0 -24 Td
+/F1 12 Tf
+(Projects) Tj
+0 -18 Td
+/F1 11 Tf
+(1) Ethio Food - https://ethiofood.infinityfree.me/) Tj
+0 -15 Td
+(2) KHCFF Website - https://hukhcff.infinityfree.me/) Tj
+0 -24 Td
+/F1 12 Tf
+(Languages) Tj
+0 -18 Td
+/F1 11 Tf
+(English, Amharic) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000010 00000 n 
+0000000062 00000 n 
+0000000122 00000 n 
+0000000248 00000 n 
+0000000918 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+988
+%%EOF
