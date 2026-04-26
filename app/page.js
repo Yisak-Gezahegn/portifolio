@@ -3,6 +3,7 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { useEffect, useState } from "react";
 import {
   ArrowUp,
@@ -36,6 +37,24 @@ export default function HomePage() {
     mass: 0.2
   });
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const personStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Yisak Gezahegn Mamo",
+    jobTitle: "Full Stack Software Engineer",
+    url: "https://yisak-gezahegn.vercel.app",
+    image: "https://yisak-gezahegn.vercel.app/images/yisak-hero-visual.svg",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Adama",
+      addressCountry: "Ethiopia"
+    },
+    sameAs: [
+      "https://github.com/Yisak-Gezahegn",
+      "https://t.me/Yisak_gezahegn",
+      "https://m.facebook.com/YisakGezahegn/"
+    ]
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +70,11 @@ export default function HomePage() {
 
   return (
     <div className="relative overflow-x-hidden">
+      <Script
+        id="person-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personStructuredData) }}
+      />
       <motion.div className="fixed left-0 right-0 top-0 z-[60] h-1 origin-left bg-cyan-400" style={{ scaleX: progressScaleX }} />
       <motion.div
         aria-hidden
@@ -127,16 +151,22 @@ export default function HomePage() {
                 className="mt-8 flex flex-wrap gap-3"
               >
                 <Link
-                  href="#projects"
+                  href="/cv"
                   className="rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
                 >
-                  View My Work
+                  View Interactive CV
                 </Link>
                 <Link
                   href="/Yisak_Gezahegn_CV.pdf"
                   className="rounded-xl border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300 hover:text-cyan-200"
                 >
-                  Download Resume
+                  Download Classic PDF
+                </Link>
+                <Link
+                  href="#projects"
+                  className="rounded-xl border border-cyan-400/40 px-5 py-3 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-500/10"
+                >
+                  View My Work
                 </Link>
               </motion.div>
 
@@ -191,7 +221,7 @@ export default function HomePage() {
               <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-cyan-500/20 blur-3xl" />
               <div className="relative rounded-[2rem] border border-white/10 bg-slate-900/80 p-3 backdrop-blur">
                 <Image
-                  src="/images/yisak-profile.jpg"
+                  src="/images/yisak-hero-visual.svg"
                   alt="Yisak Gezahegn profile photo"
                   width={900}
                   height={900}
@@ -389,7 +419,7 @@ export default function HomePage() {
             className="grid items-center gap-5 rounded-2xl border border-white/10 bg-slate-900/70 p-5 backdrop-blur md:grid-cols-[auto_1fr] md:p-6"
           >
             <Image
-              src="/images/gihon-logo.jpg"
+              src="/images/yisak-hero-visual.svg"
               alt="Gihon Tech company logo"
               width={120}
               height={120}

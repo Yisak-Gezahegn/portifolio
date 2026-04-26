@@ -21,3 +21,18 @@ body {
 .section-padding {
   @apply py-16 md:py-24;
 }
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  @page {
+    margin: 12mm;
+  }
+}
