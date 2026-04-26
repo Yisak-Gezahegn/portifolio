@@ -55,7 +55,7 @@ export default function CvPage() {
           <div className="grid gap-8 border-b border-white/10 bg-gradient-to-br from-cyan-500/20 via-slate-900 to-indigo-500/15 p-8 md:grid-cols-[220px_1fr]">
             <div className="mx-auto w-44 overflow-hidden rounded-2xl border border-cyan-300/30 bg-slate-800 md:mx-0">
               <Image
-                src="/images/yisak-hero-visual.svg"
+                src="/images/yisak2.jpg"
                 alt="Yisak Gezahegn profile photo"
                 width={500}
                 height={500}

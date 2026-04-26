@@ -43,7 +43,7 @@ export default function HomePage() {
     name: "Yisak Gezahegn Mamo",
     jobTitle: "Full Stack Software Engineer",
     url: "https://yisak-gezahegn.vercel.app",
-    image: "https://yisak-gezahegn.vercel.app/images/yisak-hero-visual.svg",
+    image: "https://yisak-gezahegn.vercel.app/images/yisak2.jpg",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Adama",
@@ -221,12 +221,12 @@ export default function HomePage() {
               <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-cyan-500/20 blur-3xl" />
               <div className="relative rounded-[2rem] border border-white/10 bg-slate-900/80 p-3 backdrop-blur">
                 <Image
-                  src="/images/yisak-hero-visual.svg"
+                  src="/images/yisak2.jpg"
                   alt="Yisak Gezahegn profile photo"
                   width={900}
                   height={900}
                   priority
-                  className="h-auto w-full rounded-[1.5rem] object-contain"
+                  className="h-auto w-full rounded-[1.5rem] object-cover"
                 />
               </div>
             </motion.div>
@@ -419,7 +419,7 @@ export default function HomePage() {
             className="grid items-center gap-5 rounded-2xl border border-white/10 bg-slate-900/70 p-5 backdrop-blur md:grid-cols-[auto_1fr] md:p-6"
           >
             <Image
-              src="/images/yisak-hero-visual.svg"
+              src="/images/gihon-logo-res.jpg"
               alt="Gihon Tech company logo"
               width={120}
               height={120}
