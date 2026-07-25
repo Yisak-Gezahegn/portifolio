@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
+import { useForm, ValidationError } from "@formspree/react";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
@@ -32,8 +33,7 @@ export default function HomePage() {
     mass: 0.2
   });
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [formStatus, setFormStatus] = useState("idle"); // idle | sending | success | error
-  const [formError, setFormError] = useState("");
+  const [formState, handleFormSubmit] = useForm("mojvobpr");
   const personStructuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -65,34 +65,6 @@ export default function HomePage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  async function handleFormSubmit(e) {
-    e.preventDefault();
-    setFormStatus("sending");
-    setFormError("");
-    const form = e.target;
-    const data = new FormData(form);
-    try {
-      const res = await fetch("https://formspree.io/f/mojvobpr", {
-        method: "POST",
-        body: data,
-        headers: { Accept: "application/json" }
-      });
-      const json = await res.json();
-      if (res.ok) {
-        setFormStatus("success");
-        form.reset();
-      } else {
-        // Formspree returns { errors: [...] } on failure
-        const msg = json?.errors?.map((err) => err.message).join(", ") || "Submission failed. Please try again.";
-        setFormError(msg);
-        setFormStatus("error");
-      }
-    } catch (err) {
-      setFormError("Network error. Please check your connection and try again.");
-      setFormStatus("error");
-    }
-  }
 
   return (
     <div className="relative overflow-x-hidden">
@@ -583,56 +555,77 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <form onSubmit={handleFormSubmit} onChange={() => { if (formStatus === "error") { setFormStatus("idle"); setFormError(""); } }} className="space-y-4">
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  placeholder="Your name"
-                  className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  placeholder="Your email"
-                  className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
-                />
-                <input
-                  type="text"
-                  name="subject"
-                  required
-                  placeholder="Subject"
-                  className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
-                />
-                <textarea
-                  name="message"
-                  required
-                  rows={7}
-                  placeholder="Your message"
-                  className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
-                />
-
-                {formStatus === "success" && (
-                  <p className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
-                    ✅ Message sent! I&apos;ll get back to you soon.
-                  </p>
-                )}
-                {formStatus === "error" && (
-                  <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                    ❌ {formError || "Something went wrong. Please try again or email me directly."}
-                  </p>
-                )}
-
-                <motion.button
-                  type="submit"
-                  disabled={formStatus === "sending" || formStatus === "success"}
-                  whileTap={{ scale: 0.96 }}
-                  className="w-full rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:opacity-60 disabled:cursor-not-allowed md:w-auto"
+              {formState.succeeded ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-10 text-center"
                 >
-                  {formStatus === "sending" ? "Sending…" : formStatus === "success" ? "Sent ✓" : "Send Message"}
-                </motion.button>
-              </form>
+                  <span className="text-4xl">✅</span>
+                  <p className="text-lg font-semibold text-emerald-300">Message sent!</p>
+                  <p className="text-sm text-slate-300">
+                    Thanks for reaching out. I&apos;ll get back to you as soon as possible.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleFormSubmit} className="space-y-4">
+                  <div>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Your name"
+                      className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
+                    />
+                    <ValidationError field="name" prefix="Name" errors={formState.errors} className="mt-1 text-xs text-red-400" />
+                  </div>
+
+                  <div>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="Your email"
+                      className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
+                    />
+                    <ValidationError field="email" prefix="Email" errors={formState.errors} className="mt-1 text-xs text-red-400" />
+                  </div>
+
+                  <div>
+                    <input
+                      type="text"
+                      name="subject"
+                      required
+                      placeholder="Subject"
+                      className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
+                    />
+                    <ValidationError field="subject" prefix="Subject" errors={formState.errors} className="mt-1 text-xs text-red-400" />
+                  </div>
+
+                  <div>
+                    <textarea
+                      name="message"
+                      required
+                      rows={7}
+                      placeholder="Your message"
+                      className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
+                    />
+                    <ValidationError field="message" prefix="Message" errors={formState.errors} className="mt-1 text-xs text-red-400" />
+                  </div>
+
+                  {/* Global form-level errors (e.g. rate limit, network) */}
+                  <ValidationError errors={formState.errors} className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-300" />
+
+                  <motion.button
+                    type="submit"
+                    disabled={formState.submitting}
+                    whileTap={{ scale: 0.96 }}
+                    className="w-full rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
+                  >
+                    {formState.submitting ? "Sending…" : "Send Message"}
+                  </motion.button>
+                </form>
+              )}
             </div>
           </motion.div>
         </section>
