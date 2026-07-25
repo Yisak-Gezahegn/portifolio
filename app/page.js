@@ -32,6 +32,7 @@ export default function HomePage() {
     mass: 0.2
   });
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [formStatus, setFormStatus] = useState("idle"); // idle | sending | success | error
   const personStructuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -63,6 +64,28 @@ export default function HomePage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  async function handleFormSubmit(e) {
+    e.preventDefault();
+    setFormStatus("sending");
+    const form = e.target;
+    const data = new FormData(form);
+    try {
+      const res = await fetch("https://formspree.io/f/mojvobpr", {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" }
+      });
+      if (res.ok) {
+        setFormStatus("success");
+        form.reset();
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  }
 
   return (
     <div className="relative overflow-x-hidden">
@@ -553,7 +576,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <form action="https://formspree.io/f/mojvobpr" method="POST" className="space-y-4">
+              <form onSubmit={handleFormSubmit} className="space-y-4">
                 <input
                   type="text"
                   name="name"
@@ -582,12 +605,25 @@ export default function HomePage() {
                   placeholder="Your message"
                   className="w-full rounded-xl border border-white/15 bg-slate-800/80 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/30"
                 />
+
+                {formStatus === "success" && (
+                  <p className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
+                    ✅ Message sent! I&apos;ll get back to you soon.
+                  </p>
+                )}
+                {formStatus === "error" && (
+                  <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                    ❌ Something went wrong. Please try again or email me directly.
+                  </p>
+                )}
+
                 <motion.button
                   type="submit"
+                  disabled={formStatus === "sending" || formStatus === "success"}
                   whileTap={{ scale: 0.96 }}
-                  className="w-full rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 md:w-auto"
+                  className="w-full rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:opacity-60 disabled:cursor-not-allowed md:w-auto"
                 >
-                  Send Message
+                  {formStatus === "sending" ? "Sending…" : formStatus === "success" ? "Sent ✓" : "Send Message"}
                 </motion.button>
               </form>
             </div>
