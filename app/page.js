@@ -33,6 +33,7 @@ export default function HomePage() {
   });
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [formStatus, setFormStatus] = useState("idle"); // idle | sending | success | error
+  const [formError, setFormError] = useState("");
   const personStructuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -68,6 +69,7 @@ export default function HomePage() {
   async function handleFormSubmit(e) {
     e.preventDefault();
     setFormStatus("sending");
+    setFormError("");
     const form = e.target;
     const data = new FormData(form);
     try {
@@ -76,13 +78,18 @@ export default function HomePage() {
         body: data,
         headers: { Accept: "application/json" }
       });
+      const json = await res.json();
       if (res.ok) {
         setFormStatus("success");
         form.reset();
       } else {
+        // Formspree returns { errors: [...] } on failure
+        const msg = json?.errors?.map((err) => err.message).join(", ") || "Submission failed. Please try again.";
+        setFormError(msg);
         setFormStatus("error");
       }
-    } catch {
+    } catch (err) {
+      setFormError("Network error. Please check your connection and try again.");
       setFormStatus("error");
     }
   }
@@ -576,7 +583,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <form onSubmit={handleFormSubmit} className="space-y-4">
+              <form onSubmit={handleFormSubmit} onChange={() => { if (formStatus === "error") { setFormStatus("idle"); setFormError(""); } }} className="space-y-4">
                 <input
                   type="text"
                   name="name"
@@ -613,7 +620,7 @@ export default function HomePage() {
                 )}
                 {formStatus === "error" && (
                   <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                    ❌ Something went wrong. Please try again or email me directly.
+                    ❌ {formError || "Something went wrong. Please try again or email me directly."}
                   </p>
                 )}
 
