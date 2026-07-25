@@ -12,6 +12,7 @@ import {
   GraduationCap,
   Send,
   Github,
+  Linkedin,
   Mail,
   MapPin,
   Phone,
@@ -22,12 +23,6 @@ import ProjectCard from "@/components/ProjectCard";
 import { projects, skills } from "@/lib/data";
 
 const headline = "Hello, I am Yisak Gezahegn Mamo.";
-const skillEmojiByCategory = {
-  "Frontend Development": "🎨",
-  "Backend & Server": "⚙️",
-  "Database Architecture": "🗄️",
-  "Tools & Deployment": "🚀"
-};
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
@@ -52,7 +47,8 @@ export default function HomePage() {
     sameAs: [
       "https://github.com/Yisak-Gezahegn",
       "https://t.me/Yisak_gezahegn",
-      "https://m.facebook.com/YisakGezahegn/"
+      "https://m.facebook.com/YisakGezahegn/",
+      "https://linkedin.com/in/yisak-gezahegn-a7a692423"
     ]
   };
 
@@ -207,6 +203,15 @@ export default function HomePage() {
                     <Github size={14} />
                     GitHub
                   </Link>
+                  <Link
+                    href="https://linkedin.com/in/yisak-gezahegn-a7a692423"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg border border-cyan-300/30 bg-cyan-500/10 px-3 py-2 text-xs font-medium text-cyan-100 transition hover:-translate-y-0.5 hover:bg-cyan-500/20"
+                  >
+                    <Linkedin size={14} />
+                    LinkedIn
+                  </Link>
                 </div>
               </motion.div>
             </div>
@@ -260,12 +265,12 @@ export default function HomePage() {
                 I am a Full Stack Developer currently pursuing a dual focus in Computer Science
                 and Management at Haramaya University. This unique combination allows me to write
                 clean, efficient code while understanding the broader business objectives behind
-                every software project. I specialize in building dynamic web applications and
-                scalable database architectures, transitioning seamlessly from local development
-                environments to live server deployments. I am deeply passionate about continuous
-                learning-currently expanding my expertise in React and modern JavaScript
-                frameworks-and I am actively seeking remote opportunities to apply my technical
-                skills to complex, real-world problems.
+                every software project. I specialize in building dynamic web applications,
+                scalable database architectures, and cross-platform desktop applications — 
+                transitioning seamlessly from local development environments to live deployments 
+                on platforms like Vercel and Railway. With hands-on experience in React, 
+                Electron.js, PHP, and modern JavaScript frameworks, I actively seek remote 
+                opportunities to apply my technical skills to complex, real-world problems.
               </p>
             </motion.div>
 
@@ -290,31 +295,37 @@ export default function HomePage() {
 
           <div className="mt-12">
             <h3 className="text-xl font-semibold text-white">Technical Arsenal</h3>
-            <div className="mt-6 grid gap-5 md:grid-cols-2">
-              {Object.entries(skills).map(([category, skillList], categoryIndex) => (
+            <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {Object.entries(skills).map(([category, categoryData], categoryIndex) => (
                 <motion.div
                   key={category}
                   initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: categoryIndex * 0.08, duration: 0.35 }}
-                  className="rounded-2xl border border-white/10 bg-slate-900/70 p-5"
+                  whileHover={{ y: -4, scale: 1.01 }}
+                  className={`rounded-2xl border bg-gradient-to-br p-5 ${categoryData.border} ${categoryData.color} backdrop-blur`}
                 >
-                  <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-cyan-200">
-                    {category}
-                  </h4>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {skillList.map((skill) => (
-                      <motion.p
-                        key={skill}
-                        whileHover={{ y: -4 }}
-                        className="rounded-xl border border-white/10 bg-slate-800/80 px-3 py-2 text-sm text-slate-200"
+                  <div className="mb-4 flex items-center gap-2">
+                    <span className="text-2xl" aria-hidden>{categoryData.emoji}</span>
+                    <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+                      {category}
+                    </h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {categoryData.items.map((skill, skillIndex) => (
+                      <motion.span
+                        key={skill.name}
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: categoryIndex * 0.06 + skillIndex * 0.04, duration: 0.25 }}
+                        whileHover={{ y: -3, scale: 1.06 }}
+                        className="inline-flex cursor-default items-center gap-1.5 rounded-xl border border-white/10 bg-slate-900/60 px-3 py-1.5 text-xs font-medium text-slate-200 shadow-sm transition"
                       >
-                        <span className="mr-2" aria-hidden>
-                          {skillEmojiByCategory[category] ?? "✨"}
-                        </span>
-                        {skill}
-                      </motion.p>
+                        <span aria-hidden>{skill.icon}</span>
+                        {skill.name}
+                      </motion.span>
                     ))}
                   </div>
                 </motion.div>
@@ -527,6 +538,16 @@ export default function HomePage() {
                         <Github size={14} />
                         GitHub
                       </motion.a>
+                      <motion.a
+                        whileHover={{ y: -2 }}
+                        href="https://linkedin.com/in/yisak-gezahegn-a7a692423"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-xs text-slate-200 transition hover:border-cyan-300/40 hover:text-cyan-300"
+                      >
+                        <Linkedin size={14} />
+                        LinkedIn
+                      </motion.a>
                     </div>
                   </div>
                 </div>
@@ -619,6 +640,15 @@ export default function HomePage() {
                 aria-label="GitHub"
               >
                 <Github size={16} />
+              </Link>
+              <Link
+                href="https://linkedin.com/in/yisak-gezahegn-a7a692423"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-lg border border-white/10 p-2 text-slate-300 transition hover:border-cyan-300/40 hover:text-cyan-300"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={16} />
               </Link>
             </div>
           </div>

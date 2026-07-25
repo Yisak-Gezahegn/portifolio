@@ -60,7 +60,7 @@ export default function ProjectCard({ project, index }) {
           className="inline-flex items-center gap-2 text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
         >
           <ArrowUpRight size={16} />
-          Live Demo
+          {project.liveLabel ?? "Live Demo"}
         </Link>
       </div>
     </motion.article>
