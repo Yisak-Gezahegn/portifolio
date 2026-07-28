@@ -1,4 +1,5 @@
 import "./globals.css";
+import LenisProvider from "@/components/LenisProvider";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yisak-gezahegn.vercel.app";
 
@@ -55,7 +56,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LenisProvider>{children}</LenisProvider>
+      </body>
     </html>
   );
 }
