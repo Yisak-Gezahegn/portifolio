@@ -23,7 +23,7 @@ import Navbar from "@/components/Navbar";
 import ProjectCard from "@/components/ProjectCard";
 import { projects, skills } from "@/lib/data";
 
-const headline = "Hello, I am Yisak Gezahegn Mamo.";
+const headline = "Yisak Gezahegn";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
