@@ -13,8 +13,11 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <nav className="container-width mt-4">
         <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/70 px-4 py-3 shadow-soft backdrop-blur-xl">
-          <Link href="#home" className="text-sm font-semibold tracking-wide text-cyan-200">
-            Yisak Gezahegn
+          <Link
+            href="#home"
+            className="text-xs font-bold uppercase tracking-[0.16em] text-white transition hover:text-cyan-200 sm:text-sm"
+          >
+            YISAK GEZAHEGN
           </Link>
 
           <ul className="hidden items-center gap-6 md:flex">
