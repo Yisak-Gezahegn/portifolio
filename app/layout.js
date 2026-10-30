@@ -5,6 +5,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yisak-gezahegn.verc
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: "/images/image.png"
+  },
   title: "Yisak Gezahegn | Full Stack Software Engineer",
   description:
     "Personal portfolio of Yisak Gezahegn, a Full Stack Software Engineer and Computer Scientist building scalable web applications.",
